@@ -26,19 +26,17 @@ $(document).ready(function() {
 
 
       request.onload = function() {
-        if (request.status >= 200 && request.status < 400){
           for (var i = 0; i <= 10; i++) {
             console.log("test");
             data = JSON.parse(request.responseText).data.image_url;
             document.getElementById("searchResults").innerHTML = '<center><img src = "'+data+'"  title="GIF via Giphy"></center><br>';
-          }
-        } else {
-          console.log('reached giphy, but API returned an error');
-         }
+          };
       };
+
       request.onerror = function() {
         console.log('connection error');
       };
+      
       request.send();
     });
   });
