@@ -11,9 +11,13 @@
 	<div class="container">
 		<div id="animalButtons"></div>
 
-			<form>
-				<input type="text" id="formValueId" name="valueId"/>
-				<input type="button" id="myButton" value="Search" />
+			<form class="input-append">
+				<div id="field">
+					<input autocomplete="off" class="input" id="formValueId" name="prof1" type="text" placeholder="Type something" data-items="8"/>
+					<input type="button" id="myButton" value="Search" />
+					<button id="b1" class="btn add-more" type="button">+</button>
+					<div id="field1"></div>
+				</div>
 			</form>
 
 		<div id="animals"></div>
