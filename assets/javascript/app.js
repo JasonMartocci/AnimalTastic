@@ -1,32 +1,41 @@
+
+function buttonFeature(value){
+  alert(value);
+};
+
+
 document.addEventListener('DOMContentLoaded', function () {
 $(document).ready(function() {
 
-    $('#myButton').click(function(e) {
+    $('.myButton').click(function(e) {
     var searchFeature = ($('#formValueId').val());
     request = new XMLHttpRequest;
     request.open('GET', 'http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag='+searchFeature, true);
 
+    
     var next = 1;
 
     var searchFeature = ($('#formValueId').val());
 
-    debugger;
     console.log(searchFeature);
 
-        e.preventDefault();
-        var addto = "#field" + next;
-        next = next + 1;
-        var newIn = '<button id="field' + next + '" name="field' + next + '">'+searchFeature+'</button>';
-        var newInput = $(newIn);
-        $(addto).after(newInput);
-        $("#field" + next).attr('data-source',$(addto).attr('data-source'));
-        $("#count").val(next);  
+      e.preventDefault();
+      var addto = "#field" + next;
+      next = next + 1;
+      var newIn = '<button id="newButton" value='+searchFeature+' onclick="buttonFeature(this.value)">'+searchFeature+'</button>';
+      var newInput = $(newIn);
+      $(addto).after(newInput);
+
+
+
+
+
 
     request.onload = function() {
       if (request.status >= 200 && request.status < 400){
         data = JSON.parse(request.responseText).data.image_url;
         console.log(data);
-        document.getElementById("animals").innerHTML = '<center><img src = "'+data+'"  title="GIF via Giphy"></center>';
+        document.getElementById("searchResults").innerHTML = '<center><img src = "'+data+'"  title="GIF via Giphy"></center>';
       } else {
         console.log('reached giphy, but API returned an error');
        }
@@ -36,8 +45,12 @@ $(document).ready(function() {
     };
     request.send();
     });
+
+
+
   });
 });
+
 
 
 
