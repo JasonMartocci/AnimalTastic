@@ -5,40 +5,22 @@ $(document).ready(function() {
     var searchFeature = ($('#formValueId').val());
     request = new XMLHttpRequest;
     request.open('GET', 'http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag='+searchFeature, true);
-    
 
-
-
-  var next = 1;
-    // $("#myButton").click(function(e){
+    var next = 1;
 
     var searchFeature = ($('#formValueId').val());
+
     debugger;
     console.log(searchFeature);
+
         e.preventDefault();
         var addto = "#field" + next;
-        var addRemove = "#field" + (next);
         next = next + 1;
-        var newIn = '<button id="field' + next + '" name="field' + next + '">button 1</button>';
+        var newIn = '<button id="field' + next + '" name="field' + next + '">'+searchFeature+'</button>';
         var newInput = $(newIn);
-        var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
-        var removeButton = $(removeBtn);
         $(addto).after(newInput);
-        $(addRemove).after(removeButton);
         $("#field" + next).attr('data-source',$(addto).attr('data-source'));
         $("#count").val(next);  
-        
-            $('.remove-me').click(function(e){
-                e.preventDefault();
-                var fieldNum = this.id.charAt(this.id.length-1);
-                var fieldID = "#field" + fieldNum;
-                $(this).remove();
-                $(fieldID).remove();
-            });
-    // });
-
-
-
 
     request.onload = function() {
       if (request.status >= 200 && request.status < 400){
