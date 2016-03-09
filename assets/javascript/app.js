@@ -44,18 +44,23 @@ document.addEventListener('DOMContentLoaded', function () {
           var status = $(this).attr('status');
           var imageUrl = $(this).attr('src');
           var imageId = $(this).attr('id');
+
+          var animatedImage = animated.indexOf(this);
+          var stillImage = still.indexOf(this);
          
           if (status=='stillImage'){
 
             alert("Still Image");
             $(this).attr('status', 'movingImage');
-            $(this).attr('src', animated);
+            $(this).attr('src', animatedImage);
+            console.log(this);
 
           }else if (status=='movingImage'){
 
             alert("Moving Image");
             $(this).attr('status', 'stillImage');
-            $(this).attr('src', still);
+            $(this).attr('src', stillImage);
+            console.log(this);
 
           }
           return false;
