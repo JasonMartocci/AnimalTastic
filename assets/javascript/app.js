@@ -4,7 +4,7 @@ function buttonFeature(value){
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-$(document).ready(function() {
+  $(document).ready(function() {
 
     $('.myButton').on('click', function(e) {
       var searchFeature = ($('#formValueId').val());
@@ -25,6 +25,7 @@ $(document).ready(function() {
         $(addto).after(newInput);
 
 
+      // Function to display array of images from search or button press
       request.onload = function() {
         $("#searchResults").empty();
         for (var i = 0; i <= 10; i++) {
@@ -32,32 +33,29 @@ $(document).ready(function() {
           var animated = JSON.parse(request.responseText).data[i].images.fixed_height.url;
           var still = JSON.parse(request.responseText).data[i].images.fixed_height_still.url;
           var rating = JSON.parse(request.responseText).data[i].rating;
+          var uID = JSON.parse(request.responseText).data[i].id;
 
-          $("#searchResults").append('<img src = "'+animated+'"  alt="'+slug+'" class="pause" status="moving"> Rating: '+rating+'');
+          $("#searchResults").append('<img src = "'+animated+'"  alt="'+slug+'" class="pause" status="movingImage" id="'+uID+'"> Rating: '+rating+'');
         };
 
+        // Function to swap movingImage with stillImage
         $(document.body).on('click', '.pause', function() {
 
           var status = $(this).attr('status');
           var imageUrl = $(this).attr('src');
-
-          console.log(imageUrl);
+          var imageId = $(this).attr('id');
          
-          if (status=='still'){
+          if (status=='stillImage'){
 
             alert("Still Image");
+            $(this).attr('status', 'movingImage');
+            $(this).attr('src', animated);
 
-            $(this).attr('status', 'moving');
-
-            $("#searchResults").append('<img src = "'+animated+'"  alt="'+slug+'" class="pause" status="moving"> Rating: '+rating+'');
-
-          }else if (status=='moving'){
+          }else if (status=='movingImage'){
 
             alert("Moving Image");
-
-            $(this).attr('status', 'still');
-
-            $("#searchResults").append('<img src = "'+still+'"  alt="'+slug+'" class="pause" status="still"> Rating: '+rating+'');
+            $(this).attr('status', 'stillImage');
+            $(this).attr('src', still);
 
           }
           return false;
