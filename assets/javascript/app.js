@@ -3,10 +3,10 @@ function buttonFeature(value){
     request.send('GET', 'http://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q='+value, true);
 };
 
-document.addEventListener('DOMContentLoaded', function () {
+//document.addEventListener('DOMContentLoaded', function () {
   $(document).ready(function() {
 
-    $('.myButton').on('click', function(e) {
+    $('#search').on('click', function(e) {
       var searchFeature = ($('#formValueId').val());
       request = new XMLHttpRequest;
       request.open('GET', 'http://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q='+searchFeature, true);
@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
       var next = 1;
 
       var searchFeature = ($('#formValueId').val());
+
+
 
         e.preventDefault();
         var addto = "#field" + next;
@@ -35,31 +37,38 @@ document.addEventListener('DOMContentLoaded', function () {
           var rating = JSON.parse(request.responseText).data[i].rating;
           var uID = JSON.parse(request.responseText).data[i].id;
 
-          $("#searchResults").append('<img src = "'+animated+'"  alt="'+slug+'" class="pause" status="movingImage" id="'+uID+'"> Rating: '+rating+'');
+          var image = $('<img src = "'+animated+'"  alt="'+slug+'" class="pause" status="movingImage" id="'+uID+'">').attr('data-still', still);
+
+          image.attr('data-animated', animated);
+
+          var ratingHtml = "Rating: " + rating;
+
+          $("#searchResults").append(image);
+          $("#searchResults").append(ratingHtml);
         };
 
         // Function to swap movingImage with stillImage
-        $(document.body).on('click', '.pause', function() {
+        $(document).on('click', ".pause", function() {
 
           var status = $(this).attr('status');
           var imageUrl = $(this).attr('src');
           var imageId = $(this).attr('id');
 
-          var animatedImage = animated.indexOf(this);
-          var stillImage = still.indexOf(this);
-         
-          if (status=='stillImage'){
+          var animatedImage = animated;
+          var stillImage = still;
+
+          if (status=='stillImage') {
 
             alert("Still Image");
             $(this).attr('status', 'movingImage');
-            $(this).attr('src', animatedImage);
+            $(this).attr('src', $(this).attr('data-animated'));
             console.log(this);
 
-          }else if (status=='movingImage'){
+          } else if (status=='movingImage') {
 
             alert("Moving Image");
             $(this).attr('status', 'stillImage');
-            $(this).attr('src', stillImage);
+            $(this).attr('src', $(this).attr('data-still'));
             console.log(this);
 
           }
@@ -74,4 +83,4 @@ document.addEventListener('DOMContentLoaded', function () {
       request.send();
     });
   });
-});
+//});
